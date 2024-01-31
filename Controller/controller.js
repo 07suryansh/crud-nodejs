@@ -1,4 +1,3 @@
-const axios = require("axios");
 const Order = require("../models/order");
 const OrderItem = require("../models/orderItem");
 const Payment = require("../models/payment");
@@ -74,4 +73,45 @@ const paymentOrder = async (req, res) => {
   }
 };
 
-module.exports = { createUser, createOrder, updateOrder, paymentOrder };
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getOrderItems = async (req, res) => {
+  try {
+    const orderItems = await OrderItem.find({});
+    res.status(200).json(orderItems);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getPayments = async (req, res) => {
+  try {
+    const payments = await Payment.find({});
+    res.status(200).json(payments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = { createUser, createOrder, updateOrder, paymentOrder, getUsers, getOrders,
+getOrderItems, getPayments};
