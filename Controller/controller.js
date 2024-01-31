@@ -6,10 +6,10 @@ const User = require("../models/user");
 
 const createUser = async (req, res) => {
   try {
-    const { userName, userEmail } = req.body;
+    const { name, email } = req.body;
     const user = await User.create({
-      name: userName,
-      email: userEmail,
+      name: name,
+      email: email,
     });
     res.status(201).json(user);
   } catch (error) {
@@ -19,17 +19,14 @@ const createUser = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    const { userId, name, email, product, quantity } = req.body;
-    const orderItems = await OrderItem.create({
-      product: product,
-      quantity: quantity,
-    });
-
+    const { userId, item } = req.body;
+    const orderItems = await OrderItem.create(item);
+    console.log(orderItems);
+    console.log(typeof orderItems);
     const totalAmount = orderItems.reduce(
       (sum, item) => sum + item.quantity,
       0
     );
-
     const order = await Order.create({
       user: userId,
       items: orderItems.map((item) => item._id),

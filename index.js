@@ -7,7 +7,10 @@ const PORT = 3000;
 const dotenv = require("dotenv");
 const cors = require("cors");
 const User = require("./models/user");
-const router=require('./routes/routes')
+const Order = require("./models/order");
+const OrderItem = require("./models/orderItem");
+const Payment = require("./models/payment");
+const router = require("./routes/routes");
 
 dotenv.config();
 app.use(bodyParser.json());
@@ -28,7 +31,13 @@ db.once("open", () => {
 app.get("/", async (req, res) => {
   try {
     const users = await User.find({});
-    res.status(200).json(users);
+    const orders = await Order.find({});
+    const orderItems = await OrderItem.find({});
+    const payments = await Payment.find({});
+    // res.status(200).json(users);
+    // res.status(200).json(orders);
+    // res.status(200).json(orderItems);
+    // res.status(200).json(payments);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
